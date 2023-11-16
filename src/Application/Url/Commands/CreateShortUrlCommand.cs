@@ -36,6 +36,6 @@ public class CreateShortUrlCommandHandler : IRequestHandler<CreateShortUrlComman
         var urlEntity = new Domain.Entities.Url { OriginalUrl = request.Url };
         _ = await _context.Urls.AddAsync(urlEntity, cancellationToken);
         _ = await _context.SaveChangesAsync(cancellationToken);
-        return urlEntity.Id.ToString();
+        return _hashids.EncodeLong(urlEntity.Id);
     }
 }
