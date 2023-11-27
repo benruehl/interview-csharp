@@ -2,7 +2,7 @@ using HashidsNet;
 using Microsoft.AspNetCore.Mvc;
 using UrlShortenerService.Api.Middlewares;
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace UrlShortenerService.Api;
 
 public static class ConfigureServices
 {

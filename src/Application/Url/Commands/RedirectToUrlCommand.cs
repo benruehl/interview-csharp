@@ -34,12 +34,20 @@ public class RedirectToUrlCommandHandler : IRequestHandler<RedirectToUrlCommand,
 
     public async Task<string> Handle(RedirectToUrlCommand request, CancellationToken cancellationToken)
     {
-        long id = _hashids.DecodeSingleLong(request.Id);
+        long id;
+        try
+        {
+            id = _hashids.DecodeSingleLong(request.Id);
+        }
+        catch (NoResultException e)
+        {
+            throw new NotFoundException($"Requested ID \"{request.Id}\" is invalid.", e);
+        }
+        
         var urlEntity = await _context.Urls.FindAsync(id, cancellationToken);
-
         if (urlEntity == null)
         {
-            throw new NotFoundException(nameof(Domain.Entities.Url), id);
+            throw new NotFoundException(nameof(Domain.Entities.Url), request.Id);
         }
 
         return urlEntity.OriginalUrl;

@@ -1,4 +1,5 @@
 using FastEndpoints.Swagger;
+using UrlShortenerService.Api;
 using UrlShortenerService.Api.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,3 +39,6 @@ if (app.Environment.IsDevelopment())
 _ = app.UseHttpsRedirection();
 
 app.Run();
+
+// make this class public for access in tests
+public partial class Program { }
